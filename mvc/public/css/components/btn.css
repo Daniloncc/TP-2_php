@@ -1,0 +1,25 @@
+.btn {
+  cursor: pointer;
+  background-color: rgb(33, 65, 33);
+  border: 1px solid rgb(33, 65, 33);
+  color: rgb(252, 252, 252);
+  padding: 5px 8px;
+  font-size: 18px;
+  transition: all 0.3s ease-in-out;
+
+  &:hover {
+    background-color: transparent;
+    color: rgb(33, 65, 33);
+  }
+}
+
+.btn-alerte {
+  cursor: pointer;
+  background-color: brown;
+  border: 1px solid brown;
+
+  &:hover {
+    background-color: transparent;
+    color: brown;
+  }
+}

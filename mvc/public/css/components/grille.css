@@ -1,0 +1,26 @@
+.grille {
+  flex-grow: 1;
+  margin-left: 45px;
+  margin-right: 45px;
+  display: grid;
+  grid:
+    "header" auto
+    "section" 1fr
+    "div" auto;
+
+  & > header {
+    grid-area: header;
+  }
+
+  & > section {
+    grid-area: section;
+  }
+
+  & > div {
+    grid-area: div;
+  }
+
+  & > * + * {
+    margin-top: 35px;
+  }
+}

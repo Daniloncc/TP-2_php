@@ -1,0 +1,26 @@
+.pied-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 15px;
+  /* position: absolute;
+  bottom: 0; */
+}
+
+.pied-page__icons {
+  display: flex;
+  gap: 15px;
+
+  & a {
+    width: 16px;
+    height: 16px;
+
+    transition: all 0.3s ease-in-out;
+    &:hover {
+      transform: scale(1.2);
+      fill: rgb(238, 139, 53);
+    }
+  }
+}

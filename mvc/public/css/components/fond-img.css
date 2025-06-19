@@ -1,0 +1,9 @@
+.fond-img {
+  background-image: url("../../img/en_arriere_plante_1.jpg");
+  background-size: cover;
+  background-position: center;
+}
+
+.fond-img--adapte {
+  background-image: url("../../img/en_arriere_livre.jpg");
+}
