@@ -1,5 +1,14 @@
-{{ include('layouts/header.php', {title: 'Client Edit'})}}
-
+{{ include('layouts/header.php', {
+    title: '404',
+    nav1: 'Galerie',
+    nav2: 'Creer votre compte',
+    nav3: 'Conectez-vouz',
+    nav4: 'A propos',
+    nav5: 'Contact',
+    lien1: '/livres',
+    lien2: '/user/create',
+    lien3: '/user/connection',
+}) }}
 <header>
     <h1 class="quicksand">Librairie <strong class="pompiere">Voyages imaginaires</strong></h1>
 </header>

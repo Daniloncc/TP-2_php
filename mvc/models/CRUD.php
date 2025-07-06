@@ -6,13 +6,15 @@ abstract class CRUD extends \PDO
 {
     final public function __construct()
     {
-        parent::__construct('mysql:host=localhost;dbname=session_03_tp1;port=8888;charset=utf8', 'root', 'root');
+        parent::__construct('mysql:host=localhost;dbname=librairie;port=8888;charset=utf8', 'root', 'root');
 
         // parent::__construct('mysql:host=localhost;dbname=e2495746;port=8888;charset=utf8', 'e2495746', 'y5TEKKmOhVowqRpygXoN');
     }
 
     final public function insert($data)
     {
+        // print_r($data);
+        // die;
         $data_keys = array_fill_keys($this->fillable, '');
         $data = array_intersect_key($data, $data_keys);
         // mettre le mot cle en mode string separe par vigule
@@ -21,6 +23,7 @@ abstract class CRUD extends \PDO
         $fieldValue = ":" . implode(", :",  array_keys($data));
         $sql = "INSERT INTO $this->table ($fieldName) VALUES ($fieldValue);";
         $stmt = $this->prepare($sql);
+
 
         foreach ($data as $key => $value) {
             // (':nom', 'Alice'); associe la key a la valeur
@@ -52,6 +55,20 @@ abstract class CRUD extends \PDO
         }
     }
 
+    final public function unique($field, $value)
+    {
+        $sql = "SELECT * FROM $this->table WHERE $field = :$field";
+        $stmt = $this->prepare($sql);
+        $stmt->bindValue(":$field", $value);
+        $stmt->execute();
+        $count = $stmt->rowCount();
+        if ($count == 1) {
+            return $stmt->fetch();
+        } else {
+            return false;
+        }
+    }
+
     final public function select($field = null, $order = 'asc')
     {
         if ($field == null) {
@@ -68,6 +85,7 @@ abstract class CRUD extends \PDO
 
     final public function update($data, $id)
     {
+
 
         $data_keys = array_fill_keys($this->fillable, '');
         $data = array_intersect_key($data, $data_keys);

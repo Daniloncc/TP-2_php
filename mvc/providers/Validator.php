@@ -70,6 +70,25 @@ class Validator
         return $this;
     }
 
+    public function onlyLettersAndNumbers()
+    {
+        if (!preg_match('/^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z0-9]{3,8}$/', $this->value)) {
+            $this->errors[$this->key] = "$this->name doit contenir entre 3 et 8 caractères, avec au moins une lettre et un chiffre, sans caractères spéciaux.";
+        }
+        return $this;
+    }
+
+    public function unique($model)
+    {
+        $model = 'App\\Models\\' . $model;
+        $model = new $model;
+        $unique = $model->unique($this->key, $this->value);
+        if ($unique) {
+            $this->errors[$this->key] = "$this->name must be unique.";
+        }
+        return $this;
+    }
+
     public function isSuccess()
     {
         if (empty($this->errors)) return true;

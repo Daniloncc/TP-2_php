@@ -18,12 +18,12 @@
 <body class="fond-img">
     <nav class="navigation">
         <picture class="logo">
-            <a href="{{ base }}/client/create"><img src="{{ asset }}/img/logo_librairie.png" alt="logo"></a>
+            <a href="{{ base }}/user/create"><img src="{{ asset }}/img/logo_librairie.png" alt="logo"></a>
         </picture>
         <ul class="navigation__menu">
-            <li><a href="{{ base }}/livres">Galerie</a></li>
-            <li><a href="{{ base }}/client/create">Creer votre compte</a></li>
-            <li><a href="">Conectez-vouz</a></li>
+            <li><a href="{{ base }}{{ lien1 }}">{{ nav1 }}</a></li>
+            <li><a href="{{ base }}{{ lien2 }}">{{ nav2 }}</a></li>
+            <li><a href="{{ base }}{{ lien3 }}">{{ nav3 }}</a></li>
             <li><a href="">A propos</a></li>
             <li><a href="">Contact</a></li>
         </ul>
