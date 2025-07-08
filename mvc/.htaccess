@@ -33,7 +33,9 @@ RewriteCond %{REQUEST_FILENAME} !-d
 # #         Il indique à Apache d'arrêter le traitement des règles de réécriture supplémentaires si cette règle est appliquée.
 # #         C'est important pour éviter des boucles ou des réécritures indésirables.
 RewriteRule ^(.*)$ index.php [L]
+
 # #pour le webdev
+
 # RewriteEngine On
 # RewriteCond %{REQUEST_FILENAME} !-d
 # RewriteCond %{REQUEST_FILENAME} !-f

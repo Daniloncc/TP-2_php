@@ -1,4 +1,28 @@
-{{ include('layouts/header.php', {title: 'User Edit'})}}
+{% if session.userId is defined %}
+{{ include('layouts/header.php', {
+        title: 'Editer Profil',
+        nav1: 'Galerie',
+        nav2: 'Mon compte',
+        nav3: 'Déconnexion',
+        nav4: 'A propos',
+        nav5: 'Contact',
+        lien1: '/livres',
+        lien2: '/user/show?id=' ~ session.userId,
+        lien3: '/auth/logout',
+    }) }}
+{% else %}
+{{ include('layouts/header.php', {
+        title: 'Livres',
+        nav1: 'Galerie',
+        nav2: 'Créer votre compte',
+        nav3: 'Connectez-vous',
+        nav4: 'A propos',
+        nav5: 'Contact',
+        lien1: '/livres',
+        lien2: '/user/create',
+        lien3: '/auth/index',
+    }) }}
+{% endif %}
 <header>
     <h1 class="quicksand">Bonjour, <strong class="pompiere">{{ user.prenom }}</strong></h1>
 </header>

@@ -1,15 +1,28 @@
+{% if session.userId is defined %}
 {{ include('layouts/header.php', {
-    title: 'Utilisateur',
-    nav1: 'Galerie',
-    nav2: 'Profil',
-    nav3: 'Quitter',
-    nav4: 'A propos',
-    nav5: 'Contact',
-    lien1: '/livres',
-    lien2: '/user/edit',
-    lien3: '/user/logout',
-
-}) }}
+        title: 'Utilisateur: ' ~ session.userPrenom,
+        nav1: 'Galerie',
+        nav2: 'Mon compte',
+        nav3: 'Déconnexion',
+        nav4: 'A propos',
+        nav5: 'Contact',
+        lien1: '/livres',
+        lien2: '/user/show?id=' ~ session.userId,
+        lien3: '/auth/logout',
+    }) }}
+{% else %}
+{{ include('layouts/header.php', {
+        title: 'Livres',
+        nav1: 'Galerie',
+        nav2: 'Créer votre compte',
+        nav3: 'Connectez-vous',
+        nav4: 'A propos',
+        nav5: 'Contact',
+        lien1: '/livres',
+        lien2: '/user/create',
+        lien3: '/auth/index',
+    }) }}
+{% endif %}
 <header>
     <h1 class="quicksand">Bonjour, <strong class="pompiere">{{ user.prenom }}</strong></h1>
 </header>
@@ -27,12 +40,12 @@
         <hr>
         <form class="donnee__form" action="{{ base }}/user/delete" method="post">
             <input type="hidden" name="id" value="{{ user.id }}">
-            {% if user.idRole == 1 %}
-            <a href="{{ base }}/user/edit?id={{ user.id }}" class="btn">Liste Clients</a>
+            {% if session.userRole == 1 %}
+            <a href="{{ base }}/user/liste-clients?id={{ user.id }}" class="btn">Liste Clients</a>
             <a href="{{ base }}/livres?id={{ user.id }}" class="btn">Galerie livres</a>
             {% endif %}
-            {% if user.idRole == 2 %}
             <a href="{{ base }}/user/edit?id={{ user.id }}" class="btn">Edit profil</a>
+            {% if session.userRole == 2 %}
             <a href="{{ base }}/livres?id={{ user.id }}" class="btn">Choisir livres</a>
             <a href="book-user.php?id={{ user.id }}" class="btn">Mes livres</a>
             {% endif %}

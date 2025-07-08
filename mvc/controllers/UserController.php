@@ -7,6 +7,7 @@ use App\Models\Role;
 use App\Models\Ville;
 use App\Providers\View;
 use App\Providers\Validator;
+use App\Models\Auth;
 
 class UserController
 {
@@ -15,47 +16,6 @@ class UserController
         $ville = new Ville;
         $villes = $ville->select();
         return View::render('user/create', ['villes' => $villes]);
-    }
-
-    final public function connection()
-    {
-        return View::render('user/connection');
-    }
-
-    final public function login($data)
-    {
-        $validator = new Validator;
-        $validator->field('courriel', $data['courriel'])->email()->min(4)->max(80);
-        $validator->field('motPasse', $data['motPasse'])->onlyLettersAndNumbers();
-
-        if ($validator->isSuccess()) {
-            $user = new User;
-            $champ = array_key_first($data);
-            $userExist = $user->unique($champ, $data['courriel']);
-            if ($userExist) {
-                $motPasseDB = $userExist[6];
-                if (password_verify($data['motPasse'], $motPasseDB)) {
-
-                    // print_r($userExist);
-                    // die;
-                    $idVille = $data['idVille'];
-                    $ville = new Ville;
-                    $ville = $ville->selectId($idVille);
-                    $villes = new Ville;
-                    $villes = $villes->select();
-                    $ville =  $ville['ville'];
-                    return View::redirect('user/show?id=' . $userExist['id'], ['user' => $userExist, 'ville' => $ville, 'villes' => $villes]);
-                    echo "Mot de passe valide.";
-                } else {
-                    return View::render('user/connection', ['error' => "Mot de passe incorrect!", 'user' => $data]);
-                }
-            } else {
-                return View::render('user/connection', ['error' => "C'est Utilisateur n'existe pas!", 'user' => $data]);
-            }
-        } else {
-            $errors = $validator->getErrors();
-            return View::render('user/connection', ['errors' => $errors, 'user' => $data]);
-        }
     }
 
     final public function show($data)
@@ -126,14 +86,25 @@ class UserController
 
             $insertUser = $user->insert($data);
 
-            if ($insertUser) {
-                return View::redirect('user/show?id=' . $insertUser);
+
+            if ($insertUser == "Le courriel existe déjà.") {
+                $errors = $validator->getErrors();
+                if (isset($errors['idVille']) && $errors['idVille'] != null) {
+                    $errors['idVille'] = "La ville est necessaire!";
+                }
+                // print_r($insertUser);
+                // die;
+                $villes = new Ville;
+                $villes = $villes->select();
+
+                return View::render('user/create', ['errors' => $errors, 'user' => $data, 'villes' => $villes, 'message' => $insertUser]);
             } else {
-                return View::render('error', ['message' => '404 page non trouve!']);
+                return View::render('auth/index');
+                //return View::redirect('user/show?id=' . $insertUser);
             }
         } else {
             $errors = $validator->getErrors();
-            if ($errors['idVille']) {
+            if (isset($errors['idVille']) && $errors['idVille'] != null) {
                 $errors['idVille'] = "La ville est necessaire!";
             }
             $villes = new Ville;
@@ -196,7 +167,18 @@ class UserController
         $user = new User;
         $delete = $user->delete($data['id']);
         if ($delete) {
-            return View::render('delete', ['message' => 'Votre compte a ete bien supprime!']);
+            return View::redirect('auth/logout');
         }
+    }
+
+    final public function clients()
+    {
+        $user = new User;
+        $users = $user->select();
+        $villes = new Ville;
+        $villes = $villes->select();
+        $roles = new Role;
+        $roles = $roles->select();
+        return View::render('user/liste-clients', ['clients' => $users, 'roles' => $roles, 'villes' => $villes]);
     }
 }

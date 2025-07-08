@@ -7,7 +7,7 @@
     nav5: 'Contact',
     lien1: '/livres',
     lien2: '/user/create',
-    lien3: '/user/connection',
+    lien3: '/auth/index',
 
 }) }}
 
@@ -21,7 +21,7 @@
         <p>Nous sommes la pour vous ouffrir une experience unique des voyages au long du temps, des pays et generations, sans voir besoin de bouger de votre fouteuille prefere!</p>
         <div>
             <a href="{{ base }}/user/create">Creer votre compte</a>
-            <a href="{{ base }}/user/connection">Connectez-vous</a>
+            <a href="{{ base }}/auth/index">Connectez-vous</a>
         </div>
     </div>
 

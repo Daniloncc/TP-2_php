@@ -13,10 +13,13 @@ abstract class CRUD extends \PDO
 
     final public function insert($data)
     {
+
+        // echo ('<pre>');
         // print_r($data);
-        // die;
-        $data_keys = array_fill_keys($this->fillable, '');
-        $data = array_intersect_key($data, $data_keys);
+        // echo ('</pre>');
+        // die();
+
+
         // mettre le mot cle en mode string separe par vigule
         // Array ( [nom] => Nunes Costa e Costa [prenom] => Danilo [adresse] => Rua Doutor Augusto Lopes Pontes [telephone] => 11998090203 [courriel] => dancc86@gmail.com )
         $fieldName = implode(', ', array_keys($data));
@@ -29,10 +32,33 @@ abstract class CRUD extends \PDO
             // (':nom', 'Alice'); associe la key a la valeur
             $stmt->bindValue(":$key", $value);
         }
-        if ($stmt->execute()) {
-            return $this->lastInsertId();
+
+        if ($this->table == "utilisateur") {
+            $data_keys = array_fill_keys($this->fillable, '');
+            $data = array_intersect_key($data, $data_keys);
+            // verifier si le courriel existe deja
+            $email = $data['courriel'] ?? null;
+            $sqlVerification = "SELECT * FROM $this->table WHERE courriel = :email";
+            $stmtemail = $this->prepare($sqlVerification);
+            $stmtemail->bindValue(":email", $email);
+            $stmtemail->execute();
+
+            $result = $stmtemail->fetch(\PDO::FETCH_ASSOC);
+
+            if ($result) {
+                $message = "Le courriel existe déjà.";
+                return $message;
+            } else {
+                $stmt->execute();
+                return $this->lastInsertId();
+                echo "Le courriel est disponible.";
+            }
         } else {
-            return false;
+            // print_r($stmt);
+            // print_r($data['img_url']);
+            // die;
+            $stmt->execute();
+            return $this->lastInsertId();
         }
     }
 

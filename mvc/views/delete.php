@@ -1,5 +1,5 @@
 {{ include('layouts/header.php', {
-    title: 'Delete',
+    title: 'Bienvenue',
     nav1: 'Galerie',
     nav2: 'Creer votre compte',
     nav3: 'Conectez-vouz',
@@ -7,7 +7,7 @@
     nav5: 'Contact',
     lien1: '/livres',
     lien2: '/user/create',
-    lien3: '/user/connection',
+    lien3: '/auth/index',
 
 }) }}
 <header>

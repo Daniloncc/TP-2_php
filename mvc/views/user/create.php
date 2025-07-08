@@ -1,4 +1,15 @@
-{{ include('layouts/header.php', {title: 'Creer compte'})}}
+{{ include('layouts/header.php', {
+    title: 'Creer votre Compte',
+    nav1: 'Galerie',
+    nav2: 'Creer votre compte',
+    nav3: 'Conectez-vouz',
+    nav4: 'A propos',
+    nav5: 'Contact',
+    lien1: '/livres',
+    lien2: '/user/create',
+    lien3: '/auth/index',
+
+}) }}
 
 <header>
     <h1 class="quicksand">Librairie <strong class="pompiere">Voyages imaginaires</strong></h1>
@@ -58,10 +69,19 @@
             {% if errors.courriel is defined %}
             <span class="error">{{errors.courriel}}</span>
             {% endif %}
+            {% if message is defined %}
+            <span class="error">{{message}}</span>
+            {% endif %}
         </div>
         <div class="form__contenu">
             <lablel class="form__label">Mot de passe:</lablel>
-            <input class="form__input" type="password" name="motPasse" id="motPasse" value="{{user.motPasse}}" placeholder="Min 3, Max 8. Vous devez avoir des chiffres et lettres">
+
+            <input class="form__input" type="password" name="motPasse" id="motPasse"
+                {% if user.motPasse is not defined %}
+                value=""
+                {% endif %}
+                placeholder="Min 3, Max 8. Vous devez avoir des chiffres et lettres">
+
             {% if errors.motPasse is defined %}
             <span class="error">{{errors.motPasse}}</span>
             {% endif %}
